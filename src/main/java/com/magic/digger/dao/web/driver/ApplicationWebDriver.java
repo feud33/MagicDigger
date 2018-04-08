@@ -1,4 +1,4 @@
-package com.magic.digger.dao.web;
+package com.magic.digger.dao.web.driver;
 
 import java.util.concurrent.TimeUnit;
 

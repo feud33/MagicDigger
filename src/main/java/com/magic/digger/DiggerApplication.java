@@ -23,7 +23,7 @@ public class DiggerApplication {
 
     @Bean
     public ExitCodeGenerator runApplication() {
-        List<String> cardList = Arrays.asList("Enduire de venin", "Toucher de digital lunaire");
+        List<String> cardList = Arrays.asList("Paladin affamé", "Enduire de venin", "Toucher de digital lunaire");
 
         try {
             bestSellersController.computeBestSellersCommande(cardList);
