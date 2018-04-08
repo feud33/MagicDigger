@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.magic.digger.service.CardSoldService;
-import com.magic.digger.service.webdriver.WebDriverService;
+import com.magic.digger.service.WebDriverService;
 
 @Controller
 public class BestSellersController {
@@ -20,7 +20,7 @@ public class BestSellersController {
     }
 
     public void computeBestSellersCommande(List<String> cardLists) {
-        webDriverService.create();
-        cardSoldService.getCardSolders(cardLists);
+        cardSoldService.getCardSolders(webDriverService, cardLists);
+        webDriverService.terminate();
     }
 }
