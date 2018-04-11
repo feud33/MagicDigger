@@ -6,11 +6,11 @@ import com.magic.digger.dao.web.driver.ApplicationWebDriver;
 import com.magic.digger.dao.web.driver.ApplicationWebDriverOption;
 
 @Service
-public class WebDriverService {
+public class WebDriverManager {
 
     private ApplicationWebDriver driver;
 
-    public WebDriverService() {
+    public WebDriverManager() {
         ApplicationWebDriverOption applicationWebDriverOption = new ApplicationWebDriverOption();
         driver = new ApplicationWebDriver(applicationWebDriverOption);
     }

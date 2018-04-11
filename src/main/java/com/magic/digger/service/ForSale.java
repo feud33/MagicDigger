@@ -1,13 +1,13 @@
-package com.magic.digger.dao.web.cardsold;
+package com.magic.digger.service;
 
 public class ForSale {
-    private String cardName;
     private String sellerName;
+    private String cardName;
     private LanguageEnum language;
     private int price;
     private int quantity;
 
-    public ForSale(String cardName, String sellerName, LanguageEnum language, int price, int quantity) {
+    public ForSale(String sellerName, String cardName, LanguageEnum language, int price, int quantity) {
         this.cardName = cardName;
         this.sellerName = sellerName;
         this.language = language;
@@ -15,12 +15,12 @@ public class ForSale {
         this.quantity = quantity;
     }
 
-    public String getCardName() {
-        return cardName;
-    }
-
     public String getSellerName() {
         return sellerName;
+    }
+
+    public String getCardName() {
+        return cardName;
     }
 
     public LanguageEnum getLanguage() {

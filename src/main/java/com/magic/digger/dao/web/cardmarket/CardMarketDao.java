@@ -1,6 +1,8 @@
-package com.magic.digger.dao.web.cardsold;
+package com.magic.digger.dao.web.cardmarket;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
@@ -13,12 +15,12 @@ import org.springframework.stereotype.Repository;
 import com.magic.digger.dao.web.driver.ApplicationWebDriver;
 
 @Repository
-public class CardSoldDao {
+public class CardMarketDao {
     public void setup(ApplicationWebDriver driver) {
         driver.get("https://www.cardmarket.com/fr/Magic");
     }
 
-    public void findCard(ApplicationWebDriver driver, String card) {
+    public void surfTofindCard(ApplicationWebDriver driver, String card) {
         WebElement searchForm = driver.findElement(By.name("searchFor"));
         searchForm.sendKeys(card);
 
@@ -26,7 +28,7 @@ public class CardSoldDao {
         searchButton.click();
     }
 
-    public void filterCard(ApplicationWebDriver driver) {
+    public void surfTofilterCard(ApplicationWebDriver driver) {
         WebElement articleFilterForm = (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id("articleFilterForm")));
 
@@ -37,7 +39,7 @@ public class CardSoldDao {
         articleFilterForm.submit();
     }
 
-    public List<ForSale> retrieveCardSolder(ApplicationWebDriver driver, String cardName) {
+    public List<CMForSale> retrieveCardSolder(ApplicationWebDriver driver) {
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className("nameHeader")));
 
@@ -53,23 +55,15 @@ public class CardSoldDao {
         return sellers.findElements(By.tagName("tr")).stream()
                 .skip(1)
                 .filter(this::isFrenchSeller)
-                .map(sellerLine -> new ForSale(cardName, retrieveName(sellerLine), retrieveLanguage(sellerLine),
+                .map(sellerLine -> new CMForSale(retrieveName(sellerLine), retrieveLanguage(sellerLine),
                         retrievePrice(sellerLine), retrieveAvailable(sellerLine)))
                 .collect(Collectors.toList());
     }
 
-    private int retrievePrice(WebElement line) {
+    private String retrievePrice(WebElement line) {
         WebElement priceNode = line.findElement(By.className("Price"));
         String priceFullTExt = priceNode.findElements(By.tagName("div")).get(1).getText();
-        String stringPrice = priceFullTExt.substring(0, priceFullTExt.indexOf(' '));
-
-        int price = 0;
-        try {
-            price = Integer.parseInt(stringPrice);
-        } catch (NumberFormatException e) {
-            // do nothing, price to 0
-        }
-        return price;
+        return priceFullTExt.substring(0, priceFullTExt.indexOf(' '));
     }
 
     private String retrieveName(WebElement line) {
@@ -77,26 +71,21 @@ public class CardSoldDao {
         return seller.findElement(By.tagName("a")).getText();
     }
 
-    private LanguageEnum retrieveLanguage(WebElement line) {
+    private String retrieveLanguage(WebElement line) {
         WebElement seller = line.findElement(By.className("Language"));
-        WebElement nationText = seller.findElement(By.tagName("span"));
-        if (nationText.getAttribute("onMouseOver").contains("Français")) {
-            return LanguageEnum.FRENCH;
+        String nationText = seller.findElement(By.tagName("span")).getAttribute("onMouseOver");
+
+        Pattern pattern = Pattern.compile("'(.*?)'");
+        Matcher matcher = pattern.matcher(nationText);
+        if (matcher.find()) {
+            return matcher.group(1);
         } else {
-            return LanguageEnum.ENGLISH;
+            return "";
         }
     }
 
-    private int retrieveAvailable(WebElement line) {
-        String stringAvailable = line.findElement(By.className("Available")).getText();
-
-        int quantity = 0;
-        try {
-            quantity = Integer.parseInt(stringAvailable);
-        } catch (NumberFormatException e) {
-            // do nothing, quantity to 0
-        }
-        return quantity;
+    private String retrieveAvailable(WebElement line) {
+        return line.findElement(By.className("Available")).getText();
     }
 
     private boolean isFrenchSeller(WebElement line) {
