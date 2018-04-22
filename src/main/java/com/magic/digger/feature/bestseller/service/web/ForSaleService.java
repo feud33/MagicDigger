@@ -1,13 +1,23 @@
 package com.magic.digger.feature.bestseller.service.web;
 
-public class ForSaleService {
-/*
-    private final CardMarketDao cardMarketDao;
-    private final CMForSaleToForSaleMapper forSaleMapper;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ForSaleService(CardMarketDao cardSoldDao, CMForSaleToForSaleMapper forSaleMapper) {
-        this.cardMarketDao = cardSoldDao;
-        this.forSaleMapper = forSaleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.magic.digger.feature.bestseller.dao.web.cardmarket.CMForSale;
+import com.magic.digger.feature.bestseller.dao.web.cardmarket.CardMarketDao;
+
+@Service
+public class ForSaleService {
+    private final CardMarketDao cardMarketDao;
+    private final CMForSaleToForSaleMapper cMForSaleToForSaleMapper;
+
+    @Autowired
+    public ForSaleService(CardMarketDao cardMarketDao, CMForSaleToForSaleMapper cMForSaleToForSaleMapper) {
+        this.cardMarketDao = cardMarketDao;
+        this.cMForSaleToForSaleMapper = cMForSaleToForSaleMapper;
     }
 
     public List<ForSale> retrieveForSales(WebDriverManager driverService, List<String> cardList) {
@@ -19,7 +29,7 @@ public class ForSaleService {
             cardMarketDao.surfTofilterCard(driverService.getDriver());
             for (CMForSale cmforSale : cardMarketDao.retrieveCardSolder(driverService.getDriver())) {
                 try {
-                    forSales.add(forSaleMapper.create(card, cmforSale));
+                    forSales.add(cMForSaleToForSaleMapper.create(card, cmforSale));
                 } catch (IllegalStateException e) {
                     // do nothing
                 }
@@ -27,5 +37,4 @@ public class ForSaleService {
         }
         return forSales;
     }
-*/
 }

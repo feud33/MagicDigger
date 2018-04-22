@@ -13,21 +13,16 @@ public class WebDriverManager {
     }
 
     public void quit() {
-/*
         driver.close();
         driver.quit();
-*/
     }
 
-/*
     public ApplicationWebDriver getDriver() {
         return driver;
     }
-*/
 
     public void terminate() {
-        //        driver.close();
-        //        driver.quit();
-        System.out.println("pok");
+        driver.close();
+        driver.quit();
     }
 }

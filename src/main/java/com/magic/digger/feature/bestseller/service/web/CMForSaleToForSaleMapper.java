@@ -1,7 +1,10 @@
 package com.magic.digger.feature.bestseller.service.web;
 
+import org.springframework.stereotype.Service;
+
 import com.magic.digger.feature.bestseller.dao.web.cardmarket.CMForSale;
 
+@Service
 class CMForSaleToForSaleMapper {
     private CMForSaleToForSaleMapper() {
 
