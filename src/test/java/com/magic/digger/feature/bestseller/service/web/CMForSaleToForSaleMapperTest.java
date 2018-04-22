@@ -1,10 +1,10 @@
-package com.magic.digger.service;
+package com.magic.digger.feature.bestseller.service.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import com.magic.digger.dao.web.cardmarket.CMForSale;
+import com.magic.digger.feature.bestseller.dao.web.cardmarket.CMForSale;
 
 public class CMForSaleToForSaleMapperTest {
 

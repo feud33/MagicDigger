@@ -1,10 +1,8 @@
-package com.magic.digger.service;
+package com.magic.digger.feature.bestseller.service.web;
 
-import org.springframework.stereotype.Service;
+import com.magic.digger.feature.bestseller.dao.web.cardmarket.CMForSale;
 
-import com.magic.digger.dao.web.cardmarket.CMForSale;
-
-@Service class CMForSaleToForSaleMapper {
+class CMForSaleToForSaleMapper {
     private CMForSaleToForSaleMapper() {
 
     }

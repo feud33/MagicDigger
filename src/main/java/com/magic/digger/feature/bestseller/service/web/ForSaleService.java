@@ -1,20 +1,10 @@
-package com.magic.digger.service;
+package com.magic.digger.feature.bestseller.service.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.magic.digger.dao.web.cardmarket.CMForSale;
-import com.magic.digger.dao.web.cardmarket.CardMarketDao;
-
-@Service
 public class ForSaleService {
+/*
     private final CardMarketDao cardMarketDao;
     private final CMForSaleToForSaleMapper forSaleMapper;
 
-    @Autowired
     public ForSaleService(CardMarketDao cardSoldDao, CMForSaleToForSaleMapper forSaleMapper) {
         this.cardMarketDao = cardSoldDao;
         this.forSaleMapper = forSaleMapper;
@@ -37,4 +27,5 @@ public class ForSaleService {
         }
         return forSales;
     }
+*/
 }

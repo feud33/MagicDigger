@@ -9,20 +9,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.magic.digger.controller.BestSellersController;
+import com.magic.digger.feature.bestseller.controller.BestSellersController;
 
-@SpringBootApplication
-public class DiggerApplication {
+@SpringBootApplication public class DiggerApplication {
 
-    @Autowired
-    private BestSellersController bestSellersController;
+    @Autowired private BestSellersController bestSellersController;
 
     public static void main(String[] args) {
         System.exit(SpringApplication.exit(SpringApplication.run(DiggerApplication.class, args)));
     }
 
-    @Bean
-    public ExitCodeGenerator runApplication() {
+    @Bean public ExitCodeGenerator runApplication() {
         List<String> cardList = Arrays.asList("Paladin affamé", "Enduire de venin", "Toucher de digital lunaire");
 
         try {
