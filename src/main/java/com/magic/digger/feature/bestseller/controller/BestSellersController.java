@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.magic.digger.feature.bestseller.service.MonService;
 import com.magic.digger.feature.bestseller.service.web.WebDriverManager;
 
 @Controller public class BestSellersController {
@@ -22,11 +21,9 @@ import com.magic.digger.feature.bestseller.service.web.WebDriverManager;
 
     public void computeBestSellersCommande(List<String> cardLists) {
         WebDriverManager webDriverManager = new WebDriverManager();
+        webDriverManager.terminate();
+
         //        List<ForSale> forSales = forSaleService.retrieveForSales(webDriverManager, cardLists);
         //        webDriverManager.terminate();
-
-        MonService monService = new MonService();
-        monService.print();
-        System.out.println("ok");
     }
 }
