@@ -5,33 +5,36 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.magic.digger.feature.bestseller.service.web.ForSale;
 
+@Service
 public class AllTradesService {
 
     private static final AvailableCard UNAVAILABLE_CARD = null;
 
     public List<SellerCardsDetail> buildDeals(List<String> cards, List<ForSale> forSales) {
-        List<String> sellersSet = buildSellersSet(forSales);
+        List<String> sellers = buildSellersSet(forSales);
         HashMap<DealKey, AvailableCard> cardMatrix = buildCardsSellersMatrix(forSales);
-        return determinePossibleDeals(cards, sellersSet, cardMatrix);
+        return determinePossibleDeals(cards, sellers, cardMatrix);
     }
 
     private List<SellerCardsDetail> determinePossibleDeals(List<String> cards, List<String> sellers,
             HashMap<DealKey, AvailableCard> cardMatrix) {
+        CombinationBrowserService combinationBrowserService = new CombinationBrowserService(cards.size(),
+                sellers.size());
         List<SellerCardsDetail> possibleDeals = new ArrayList<>();
-        boolean matrixBrowseOver = false;
-        int sellerCount = sellers.size();
-        int cardCount = cards.size();
-        int matrixBrowse[] = new int[cardCount];
 
-        int currentCardPos = 0;
-        while (!matrixBrowseOver) {
-            boolean completeDealDetail = true;
+        do {
             SellerCardsDetail sellerCardsDetail = new SellerCardsDetail();
-            while (currentCardPos < cardCount && completeDealDetail) {
+
+            int currentCardPos = 0;
+            boolean completeDealDetail = true;
+            List<Integer> currentCombinations = combinationBrowserService.getCurrentCombination();
+            while (currentCardPos < cards.size()) {
                 String card = cards.get(currentCardPos);
-                String seller = sellers.get(matrixBrowse[currentCardPos]);
+                String seller = sellers.get(currentCombinations.get(currentCardPos));
                 DealKey dealKey = new DealKey(seller, card);
                 AvailableCard availableCard = cardMatrix.get(dealKey);
                 if (availableCard == UNAVAILABLE_CARD) {
@@ -41,21 +44,11 @@ public class AllTradesService {
                 }
                 currentCardPos++;
             }
-            if (completeDealDetail) {
+
+            if (cards.size() != 0 && completeDealDetail) {
                 possibleDeals.add(sellerCardsDetail);
             }
-
-            matrixBrowse[currentCardPos]++;
-            if (matrixBrowse[currentCardPos] == sellerCount) {
-                matrixBrowse[currentCardPos] = 0;
-                currentCardPos++;
-                if (currentCardPos == cardCount) {
-                    matrixBrowseOver = true;
-                } else {
-                    matrixBrowse[currentCardPos]++;
-                }
-            }
-        }
+        } while (combinationBrowserService.next());
 
         return possibleDeals;
     }

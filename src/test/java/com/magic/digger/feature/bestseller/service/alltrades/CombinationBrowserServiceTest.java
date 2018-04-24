@@ -7,18 +7,18 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CombinationBrowserTest {
+public class CombinationBrowserServiceTest {
 
-    private CombinationBrowser combinationBrowser;
+    private CombinationBrowserService combinationBrowserService;
 
     @Before
     public void setup() {
-        combinationBrowser = new CombinationBrowser(3, 2);
+        combinationBrowserService = new CombinationBrowserService(3, 2);
     }
 
     @Test
     public void shouldGet000() {
-        List<Integer> currentCombination = combinationBrowser.getCurrentCombination();
+        List<Integer> currentCombination = combinationBrowserService.getCurrentCombination();
         assertThat(currentCombination.get(0)).isEqualTo(0);
         assertThat(currentCombination.get(1)).isEqualTo(0);
         assertThat(currentCombination.get(2)).isEqualTo(0);
@@ -26,9 +26,9 @@ public class CombinationBrowserTest {
 
     @Test
     public void shouldGetPosAfter100() throws Exception {
-        combinationBrowser.next();
+        combinationBrowserService.next();
 
-        List<Integer> currentCombination = combinationBrowser.getCurrentCombination();
+        List<Integer> currentCombination = combinationBrowserService.getCurrentCombination();
         assertThat(currentCombination.get(0)).isEqualTo(1);
         assertThat(currentCombination.get(1)).isEqualTo(0);
         assertThat(currentCombination.get(2)).isEqualTo(0);
@@ -36,10 +36,10 @@ public class CombinationBrowserTest {
 
     @Test
     public void shouldGetPosAfter010() throws Exception {
-        combinationBrowser.next();
-        combinationBrowser.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
 
-        List<Integer> currentCombination = combinationBrowser.getCurrentCombination();
+        List<Integer> currentCombination = combinationBrowserService.getCurrentCombination();
         assertThat(currentCombination.get(0)).isEqualTo(0);
         assertThat(currentCombination.get(1)).isEqualTo(1);
         assertThat(currentCombination.get(2)).isEqualTo(0);
@@ -47,12 +47,12 @@ public class CombinationBrowserTest {
 
     @Test
     public void shouldGetPosAfter110() throws Exception {
-        System.out.println(combinationBrowser.toString());
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
+        System.out.println(combinationBrowserService.toString());
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
 
-        List<Integer> currentCombination = combinationBrowser.getCurrentCombination();
+        List<Integer> currentCombination = combinationBrowserService.getCurrentCombination();
         assertThat(currentCombination.get(0)).isEqualTo(1);
         assertThat(currentCombination.get(1)).isEqualTo(1);
         assertThat(currentCombination.get(2)).isEqualTo(0);
@@ -60,12 +60,12 @@ public class CombinationBrowserTest {
 
     @Test
     public void shouldGetPosAfter001() throws Exception {
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
 
-        List<Integer> currentCombination = combinationBrowser.getCurrentCombination();
+        List<Integer> currentCombination = combinationBrowserService.getCurrentCombination();
         assertThat(currentCombination.get(0)).isEqualTo(0);
         assertThat(currentCombination.get(1)).isEqualTo(0);
         assertThat(currentCombination.get(2)).isEqualTo(1);
@@ -73,14 +73,14 @@ public class CombinationBrowserTest {
 
     @Test
     public void shouldGetPosAfter111() throws Exception {
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        combinationBrowser.next();
-        boolean next = combinationBrowser.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        combinationBrowserService.next();
+        boolean next = combinationBrowserService.next();
 
         assertThat(next).isFalse();
     }

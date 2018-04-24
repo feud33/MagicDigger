@@ -21,9 +21,7 @@ public class CardMarketDao {
     }
 
     public void setup(ApplicationWebDriver driver) {
-        System.out.println("ok");
         driver.get("https://www.cardmarket.com/fr/Magic");
-        System.out.println("ok");
     }
 
     public void surfTofindCard(ApplicationWebDriver driver, String card) {

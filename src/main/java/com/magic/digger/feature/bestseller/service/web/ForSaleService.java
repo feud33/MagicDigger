@@ -3,7 +3,6 @@ package com.magic.digger.feature.bestseller.service.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.magic.digger.feature.bestseller.dao.web.cardmarket.CMForSale;
@@ -14,7 +13,6 @@ public class ForSaleService {
     private final CardMarketDao cardMarketDao;
     private final CMForSaleToForSaleMapper cMForSaleToForSaleMapper;
 
-    @Autowired
     public ForSaleService(CardMarketDao cardMarketDao, CMForSaleToForSaleMapper cMForSaleToForSaleMapper) {
         this.cardMarketDao = cardMarketDao;
         this.cMForSaleToForSaleMapper = cMForSaleToForSaleMapper;

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CombinationBrowser {
+public class CombinationBrowserService {
     private final int colNum;
     private final int rawNum;
 
     private Integer combinations[];
 
-    public CombinationBrowser(int colNum, int rawNum) {
+    public CombinationBrowserService(int colNum, int rawNum) {
         this.colNum = colNum;
         this.rawNum = rawNum;
 
@@ -25,7 +25,6 @@ public class CombinationBrowser {
                 setPreviousColToZero(i + 1);
             }
             combinations[i]++;
-            System.out.println(this.toString());
             return true;
         } else {
             return false;
