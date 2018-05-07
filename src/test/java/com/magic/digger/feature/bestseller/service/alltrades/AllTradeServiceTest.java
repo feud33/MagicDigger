@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.magic.digger.feature.bestseller.service.web.ForSale;
-import com.magic.digger.feature.bestseller.service.web.LanguageEnum;
+import com.magic.digger.feature.common.service.cardmarket.Card;
+import com.magic.digger.feature.common.service.cardmarket.LanguageEnum;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AllTradeServiceTest {
@@ -25,7 +25,7 @@ public class AllTradeServiceTest {
     private static final String FAUCON_DE_NUIT_VAMPIRE = "Faucon de nuit vampire";
     private static final String GARDIEN_DE_LA_LIGNEE = "Gardien de la lignée";
 
-    private List<ForSale> forSales;
+    private List<Card> cards;
     private List<String> cardLists;
 
     @InjectMocks
@@ -34,48 +34,48 @@ public class AllTradeServiceTest {
     @Before
     public void setup() {
         allTradeService = new AllTradesService();
-        forSales = new ArrayList<>();
+        cards = new ArrayList<>();
         cardLists = new ArrayList<>();
     }
 
     @Test
     public void shouldReturnEmptyListForEmptyforSales() {
-        List<SellerCardsDetail> deals = allTradeService.buildDeals(cardLists, forSales);
+        List<SellerCardsDetail> deals = allTradeService.buildDeals(cardLists, cards);
 
         assertThat(deals).isEmpty();
     }
 
     @Test
     public void shouldCumputeDealWith3Cards2Sellers() {
-        forSales.add(new ForSale(MAGIC_BAZAR, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 100, 1));
-        forSales.add(new ForSale(MAGIC_BAZAR, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 110, 1));
-        forSales.add(new ForSale(MAGIC_BAZAR, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 120, 1));
-        forSales.add(new ForSale(VENDEUR2, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 10, 1));
-        forSales.add(new ForSale(VENDEUR2, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 11, 1));
-        forSales.add(new ForSale(VENDEUR2, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 12, 1));
+        cards.add(new Card(MAGIC_BAZAR, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 100, 1));
+        cards.add(new Card(MAGIC_BAZAR, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 110, 1));
+        cards.add(new Card(MAGIC_BAZAR, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 120, 1));
+        cards.add(new Card(VENDEUR2, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 10, 1));
+        cards.add(new Card(VENDEUR2, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 11, 1));
+        cards.add(new Card(VENDEUR2, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 12, 1));
 
         cardLists.add(EMISSAIRE_DE_DRANA);
         cardLists.add(FAUCON_DE_NUIT_VAMPIRE);
         cardLists.add(GARDIEN_DE_LA_LIGNEE);
 
-        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, forSales);
+        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, cards);
 
         assertThat(sellerCardsDetails.size()).isEqualTo(8);
     }
 
     @Test
     public void shouldCumputeDealWith3Cards3Sellers() {
-        forSales.add(new ForSale(MAGIC_BAZAR, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 100, 1));
-        forSales.add(new ForSale(MAGIC_BAZAR, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 110, 1));
-        forSales.add(new ForSale(MAGIC_BAZAR, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 120, 1));
-        forSales.add(new ForSale(VENDEUR2, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 11, 1));
-        forSales.add(new ForSale(VENDEUR2, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 12, 1));
+        cards.add(new Card(MAGIC_BAZAR, EMISSAIRE_DE_DRANA, LanguageEnum.FRENCH, 100, 1));
+        cards.add(new Card(MAGIC_BAZAR, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 110, 1));
+        cards.add(new Card(MAGIC_BAZAR, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 120, 1));
+        cards.add(new Card(VENDEUR2, FAUCON_DE_NUIT_VAMPIRE, LanguageEnum.FRENCH, 11, 1));
+        cards.add(new Card(VENDEUR2, GARDIEN_DE_LA_LIGNEE, LanguageEnum.FRENCH, 12, 1));
 
         cardLists.add(EMISSAIRE_DE_DRANA);
         cardLists.add(FAUCON_DE_NUIT_VAMPIRE);
         cardLists.add(GARDIEN_DE_LA_LIGNEE);
 
-        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, forSales);
+        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, cards);
 
         assertThat(sellerCardsDetails.size()).isEqualTo(4);
     }
@@ -97,12 +97,12 @@ public class AllTradeServiceTest {
         int MAX_SELLER = 3;
         while (seller < MAX_SELLER) {
             for (String card : cardLists) {
-                forSales.add(new ForSale("Vendeur " + seller, card, LanguageEnum.FRENCH, 100, 1));
+                cards.add(new Card("Vendeur " + seller, card, LanguageEnum.FRENCH, 100, 1));
             }
             seller++;
         }
 
-        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, forSales);
+        List<SellerCardsDetail> sellerCardsDetails = allTradeService.buildDeals(cardLists, cards);
 
         assertThat(sellerCardsDetails.size()).isEqualTo(2047);
     }

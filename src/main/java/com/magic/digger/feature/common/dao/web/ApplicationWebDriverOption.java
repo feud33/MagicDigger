@@ -1,4 +1,4 @@
-package com.magic.digger.feature.bestseller.dao.web.driver;
+package com.magic.digger.feature.common.dao.web;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

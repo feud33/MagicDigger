@@ -1,7 +1,7 @@
-package com.magic.digger.feature.bestseller.service.web;
+package com.magic.digger.feature.common.service.cardmarket;
 
-import com.magic.digger.feature.bestseller.dao.web.driver.ApplicationWebDriver;
-import com.magic.digger.feature.bestseller.dao.web.driver.ApplicationWebDriverOption;
+import com.magic.digger.feature.common.dao.web.ApplicationWebDriver;
+import com.magic.digger.feature.common.dao.web.ApplicationWebDriverOption;
 
 public class WebDriverManager {
 

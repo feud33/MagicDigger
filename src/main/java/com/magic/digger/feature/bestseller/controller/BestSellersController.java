@@ -7,26 +7,31 @@ import org.springframework.stereotype.Controller;
 
 import com.magic.digger.feature.bestseller.service.alltrades.AllTradesService;
 import com.magic.digger.feature.bestseller.service.alltrades.SellerCardsDetail;
-import com.magic.digger.feature.bestseller.service.web.ForSale;
-import com.magic.digger.feature.bestseller.service.web.ForSaleService;
-import com.magic.digger.feature.bestseller.service.web.WebDriverManager;
+import com.magic.digger.feature.bestseller.service.besttrades.BestTradeService;
+import com.magic.digger.feature.bestseller.service.besttrades.Deal;
+import com.magic.digger.feature.common.service.cardmarket.Card;
+import com.magic.digger.feature.common.service.cardmarket.MagicCardmarketService;
+import com.magic.digger.feature.common.service.cardmarket.WebDriverManager;
 
 @Controller public class BestSellersController {
-    private ForSaleService forSaleService;
+    private MagicCardmarketService magicCardmarketService;
     private AllTradesService allTradesService;
+    private BestTradeService bestTradesService;
 
     @Autowired
-    public BestSellersController(ForSaleService forSaleService, AllTradesService allTradesService) {
-        this.forSaleService = forSaleService;
+    public BestSellersController(MagicCardmarketService magicCardmarketService, AllTradesService allTradesService, BestTradeService bestTradesService) {
+        this.magicCardmarketService = magicCardmarketService;
         this.allTradesService = allTradesService;
+        this.bestTradesService = bestTradesService;
     }
 
     public void computeBestSellersCommande(List<String> cardLists) {
         WebDriverManager webDriverManager = new WebDriverManager();
 
-        List<ForSale> forSales = forSaleService.retrieveForSales(webDriverManager, cardLists);
+        List<Card> cards = magicCardmarketService.retrieveCardsToSale(webDriverManager, cardLists);
         webDriverManager.terminate();
 
-        List<SellerCardsDetail> sellerCardsDetails = allTradesService.buildDeals(cardLists, forSales);
+        List<SellerCardsDetail> sellerCardsDetails = allTradesService.buildDeals(cardLists, cards);
+        List<Deal> deals = bestTradesService.computeDealsPrice(sellerCardsDetails);
     }
 }

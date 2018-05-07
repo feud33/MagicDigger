@@ -1,4 +1,4 @@
-package com.magic.digger.feature.bestseller.service.web;
+package com.magic.digger.feature.common.service.cardmarket;
 
 public enum LanguageEnum {
 

@@ -9,7 +9,7 @@ import com.magic.digger.feature.bestseller.service.alltrades.DealDetailElement;
 public class Deal implements Comparable<Deal> {
 
     private List<DealDetail> dealDetails;
-    private int price;
+    private int amount;
     private int sellersCount;
 
     public Deal() {
@@ -33,16 +33,16 @@ public class Deal implements Comparable<Deal> {
         return dealDetails.iterator();
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public void addPrice(int priceToAdd) {
-        this.price = this.price + priceToAdd;
+    public void addAmount(int amountToAdd) {
+        this.amount = this.amount + amountToAdd;
     }
 
-    public int getPrice() {
-        return price;
+    public int getAmount() {
+        return amount;
     }
 
     public int getSellersCount() {
@@ -61,14 +61,14 @@ public class Deal implements Comparable<Deal> {
 
         Deal deal = (Deal) o;
 
-        return price == deal.price;
+        return amount == deal.amount;
     }
 
     @Override public int hashCode() {
-        return price;
+        return amount;
     }
 
     @Override public int compareTo(Deal deal) {
-        return ((Integer) price).compareTo(deal.getPrice());
+        return ((Integer) amount).compareTo(deal.getAmount());
     }
 }

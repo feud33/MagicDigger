@@ -7,17 +7,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.magic.digger.feature.bestseller.service.web.ForSale;
+import com.magic.digger.feature.common.service.cardmarket.Card;
 
 @Service
 public class AllTradesService {
 
     private static final AvailableCard UNAVAILABLE_CARD = null;
 
-    public List<SellerCardsDetail> buildDeals(List<String> cards, List<ForSale> forSales) {
-        List<String> sellers = buildSellersSet(forSales);
-        HashMap<DealKey, AvailableCard> cardMatrix = buildCardsSellersMatrix(forSales);
-        return determinePossibleDeals(cards, sellers, cardMatrix);
+    public List<SellerCardsDetail> buildDeals(List<String> cardsName, List<Card> cards) {
+        List<String> sellers = buildSellersSet(cards);
+        HashMap<DealKey, AvailableCard> cardMatrix = buildCardsSellersMatrix(cards);
+        return determinePossibleDeals(cardsName, sellers, cardMatrix);
     }
 
     private List<SellerCardsDetail> determinePossibleDeals(List<String> cards, List<String> sellers,
@@ -53,20 +53,20 @@ public class AllTradesService {
         return possibleDeals;
     }
 
-    private List<String> buildSellersSet(List<ForSale> forSales) {
+    private List<String> buildSellersSet(List<Card> cards) {
         HashSet<String> sellers = new HashSet<>();
-        for (ForSale forSale : forSales) {
-            sellers.add(forSale.getSellerName());
+        for (Card card : cards) {
+            sellers.add(card.getSellerName());
         }
 
-        return new ArrayList<String>(sellers);
+        return new ArrayList<>(sellers);
     }
 
-    private HashMap<DealKey, AvailableCard> buildCardsSellersMatrix(List<ForSale> forSales) {
+    private HashMap<DealKey, AvailableCard> buildCardsSellersMatrix(List<Card> cards) {
         HashMap<DealKey, AvailableCard> cardMatrix = new HashMap<>();
-        for (ForSale forSale : forSales) {
-            DealKey dealKey = new DealKey(forSale.getSellerName(), forSale.getCardName());
-            AvailableCard availableCard = new AvailableCard(forSale.getCardName(), forSale.getPrice());
+        for (Card card : cards) {
+            DealKey dealKey = new DealKey(card.getSellerName(), card.getCardName());
+            AvailableCard availableCard = new AvailableCard(card.getCardName(), card.getPrice());
             cardMatrix.put(dealKey, availableCard);
         }
         return cardMatrix;

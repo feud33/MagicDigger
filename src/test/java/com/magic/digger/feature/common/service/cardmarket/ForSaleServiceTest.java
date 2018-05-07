@@ -1,4 +1,4 @@
-package com.magic.digger.feature.bestseller.service.web;
+package com.magic.digger.feature.common.service.cardmarket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.magic.digger.feature.bestseller.dao.web.cardmarket.CardMarketDao;
+import com.magic.digger.feature.common.dao.web.cardmarket.CardmarketDao;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ForSaleServiceTest {
 
-    @InjectMocks ForSaleService forSaleService;
+    @InjectMocks MagicCardmarketService magicCardmarketService;
 
-    @Mock CardMarketDao cardMarketDao;
+    @Mock CardmarketDao cardMarketDao;
 
     @Mock WebDriverManager driverService;
 
-    @Mock CMForSaleToForSaleMapper forSaleMapper;
+    @Mock CardmarketCardToCardMapper cardmarketCardToCardMapper;
 
     @Before public void setup() {
         //        forSaleService = new ForSaleService(cardMarketDao, forSaleMapper);

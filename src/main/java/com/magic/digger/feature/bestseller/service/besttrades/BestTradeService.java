@@ -1,63 +1,41 @@
 package com.magic.digger.feature.bestseller.service.besttrades;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.magic.digger.feature.bestseller.service.alltrades.AvailableCard;
-import com.magic.digger.feature.bestseller.service.alltrades.DealDetailElement;
+import org.springframework.stereotype.Service;
 
+import com.magic.digger.feature.bestseller.service.alltrades.DealDetailElement;
+import com.magic.digger.feature.bestseller.service.alltrades.SellerCardsDetail;
+
+@Service
 public class BestTradeService {
 
-    private static final AvailableCard UNAVAILABLE_CARD = null;
     public static final int MAIL_FEE = 120;
 
-    private void computeDealsPrice(List<Deal> deals) {
-        for (Deal deal : deals) {
-            int differentSellersCount = differentSellersCount(deal);
-
-            deal.setPrice(differentSellersCount * MAIL_FEE);
-
-            Iterator<DealDetail> dealIterator = deal.getDealDetailIterator();
-            while (dealIterator.hasNext()) {
-                DealDetail dealDetail = dealIterator.next();
-                addDifferentCardPrice(deal, dealDetail);
-            }
-        }
+    public BestTradeService() {
     }
 
-    private void addDifferentCardPrice(Deal deal, DealDetail dealDetail) {
-        Iterator<DealDetailElement> dealDetailElementIterator = dealDetail.getDealDetailElementIterator();
-        while (dealDetailElementIterator.hasNext()) {
-            DealDetailElement dealDetailElement = dealDetailElementIterator.next();
-            deal.addPrice(dealDetailElement.getPrice());
-        }
-    }
-
-    private int differentSellersCount(Deal deal) {
-        HashSet<String> differentSellers = new HashSet<>();
-        Iterator dealIterator = deal.getDealDetailIterator();
-        while (dealIterator.hasNext()) {
-            DealDetail dealDetail = (DealDetail) dealIterator.next();
-            differentSellers.add(dealDetail.getSeller());
-        }
-        return differentSellers.size();
-    }
-
-/*
-    private List<Deal> buildDeals(List<String> cards, HashMap<DealKey, AvailableCard> cardMatrix, List<String> sellersSet) {
+    public List<Deal> computeDealsPrice(List<SellerCardsDetail> sellerCardsDetails) {
         List<Deal> deals = new ArrayList<>();
-        for (String seller : sellersSet) {
+
+        for(SellerCardsDetail sellerCardsDetail : sellerCardsDetails) {
             Deal deal = new Deal();
-            for (String card : cards) {
-                DealKey dealKey = new DealKey(seller, card);
-                AvailableCard availableCard = cardMatrix.get(dealKey);
-                deal.addDealDetails(seller, card, availableCard.getPrice());
+            deal.setAmount((int)sellerCardsDetail.getSellers().count() * MAIL_FEE);
+            Iterator<DealDetail> dealDetailIterator = deal.getDealDetailIterator();
+            while( dealDetailIterator.hasNext()) {
+                DealDetail dealDetail = dealDetailIterator.next();
+
+                Iterator<DealDetailElement> dealDetailElementIterator = dealDetail.getDealDetailElementIterator();
+                while( dealDetailElementIterator.hasNext()) {
+                    DealDetailElement dealDetailElement = dealDetailElementIterator.next();
+                    deal.addAmount(dealDetailElement.getPrice());
+                }
             }
             deals.add(deal);
         }
         return deals;
     }
-*/
 
 }
